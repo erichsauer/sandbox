@@ -68,4 +68,55 @@ function spiralTraversal(matrix) {
   return solution;
 }
 
-console.log(spiralTraversal(matrix));
+function spiralTraversal2(matrix) {
+  // first we need to define some variables for defining the bounds of the matrix
+  let columnStart = 0,
+    columnEnd = matrix[0].length - 1,
+    rowStart = 0,
+    rowEnd = matrix.length - 1;
+
+  // next, let's define a variable to keep track of navigation
+  let direction = 0;
+
+  // now we'll create a container to hold our solution!
+  const solution = [];
+
+  // great! now we'll need a loop happening until the matrix has been traversed completely. we'll increment/decrement row/column start/end after each pass so the matrix will have been traversed when columnStart === columnEnd && rowStart === rowEnd
+  while (columnStart <= columnEnd && rowStart <= rowEnd) {
+    // let's use a switch statement to keep things tidy; we'll enter the switch statement after each change in direction
+    switch (direction) {
+      // here we'll create a series of for loops to iterate across, up, or down depending on the case
+      case 0: // left-to-right across a row, from columnStart to columnEnd
+        for (let i = columnStart; i <= columnEnd; i++)
+          solution.push(matrix[rowStart][i]);
+        // now, make sure to increment rowStart so that we iterate through the next row when we arrive back here
+        rowStart++;
+        break;
+      case 1: // top-to-bottom down a column, from rowStart to rowEnd
+        for (let i = rowStart; i <= rowEnd; i++)
+          solution.push(matrix[i][columnEnd]);
+        // now, make sure to decrement columnEnd so that we iterate through the previous column when we arrive back here
+        columnEnd--;
+        break;
+      case 2: // right-to-left across a row, from columnEnd to columnStart
+        for (let i = columnEnd; i >= columnStart; i--)
+          solution.push(matrix[rowEnd][i]);
+        // now, make sure to decrement rowEnd so that we iterate through the previous row when we arrive back here
+        rowEnd--;
+        break;
+      case 3: // bottom-to-top up a column, from rowEnd to rowStart
+        for (let i = rowEnd; i >= rowStart; i--)
+          solution.push(matrix[i][columnStart]);
+        // now, make sure to increment columnStart so that we iterate through the next column when we arrive back here
+        columnStart++;
+    }
+    // make sure to increment direction so that we move on to the next direction. we'll use % 4 here because we're going to be going in a four-direction loop
+    direction = (direction + 1) % 4;
+    console.log(direction);
+  }
+  return solution;
+}
+
+function spiralTraversal3(matrix) {}
+
+console.log(spiralTraversal3(matrix));
